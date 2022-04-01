@@ -1,5 +1,6 @@
 ﻿using Assignment_Backend.IService;
 using Assignment_Backend.Models;
+using Assignment_Backend.Repositories.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,24 +11,21 @@ namespace Assignment_Backend.ServiceImpl
 {
     public class UserService : IUserService
     {
-        private readonly MyDbContext _context;
+        private readonly IUserRepoistary _userRepoistary;
 
-        public UserService (MyDbContext context)
+        public UserService (IUserRepoistary userRepoistary)
         {
-            _context = context;
+            _userRepoistary = userRepoistary;
         }
 
         public async Task<User> CreateUserAsync(User user)
         {
-            await _context.User.AddAsync(user);
-            await _context.SaveChangesAsync();
-
-            return user;
+            return await _userRepoistary.AddUserToDBAsync(user);
         }
 
         public async Task<List<User>> GetAllUsersAsync()
         {
-            return await _context.User.ToListAsync(); ;
+            return await _userRepoistary.GetAllUsersFromDBAsync();
         }
     }
 }

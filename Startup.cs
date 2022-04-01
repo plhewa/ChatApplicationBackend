@@ -1,5 +1,7 @@
 using Assignment_Backend.IService;
 using Assignment_Backend.Models;
+using Assignment_Backend.Repositories.IRepositories;
+using Assignment_Backend.Repositories.RepositoryImplmentation;
 using Assignment_Backend.ServiceImpl;
 using Assignment_Backend.SignalR;
 using Microsoft.AspNetCore.Builder;
@@ -49,6 +51,9 @@ namespace Assignment_Backend
            services.AddDbContext<MyDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DevConnection")));
            services.AddTransient<IMessageService, MessageService>();
            services.AddTransient<IUserService, UserService>();
+           services.AddTransient<IMessageRepository, MessageRepositoryImpl>();
+           services.AddTransient<IUserRepoistary, UserRepositoryImpl>();
+
 
         }
 
